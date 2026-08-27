@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+venv/
+
+# Local database
+weather.db
+
+# Temporary / local data
+weather_data.csv
+
+# VS Code
+.vscode/
+
+# Environment variables
+.env
