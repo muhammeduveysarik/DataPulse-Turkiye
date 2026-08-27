@@ -1,8 +1,8 @@
 # 🌡️ DataPulse Türkiye
 
-DataPulse Türkiye, Türkiye'nin 81 ilinden gerçek zamanlı hava durumu verilerini toplayan, işleyen, SQL veritabanında saklayan ve interaktif bir dashboard üzerinden analiz eden uçtan uca bir veri projesidir.
+![DataPulse Türkiye Dashboard](dashboard.png)
 
-Proje; veri toplama, ETL pipeline, SQL, veri kalitesi, zaman serisi analizi, görselleştirme ve otomatik veri toplama süreçlerini uygulamalı olarak göstermek amacıyla geliştirilmiştir.
+DataPulse Türkiye, Türkiye'nin 81 ilinden gerçek hava durumu verilerini toplayan, işleyen, SQL veritabanında saklayan ve interaktif bir dashboard üzerinden analiz eden uçtan uca bir veri projesidir.
 
 ## 🚀 Proje Mimarisi
 
@@ -13,108 +13,83 @@ Python ETL Pipeline
       ↓
 Retry Mechanism
       ↓
-SQLite Database
+SQLite / SQL
       ↓
 Data Quality Checks
+      ↓
+Historical Data
       ↓
 Pandas Analysis
       ↓
 Streamlit Dashboard
       ↓
-Historical / Time-Series Analysis
+Hourly Automation
 ```
-
-Veri toplama işlemi Windows Task Scheduler ile saatlik olarak otomatik çalıştırılabilir.
 
 ## ✨ Özellikler
 
-- Türkiye'nin 81 ilinden hava durumu verisi toplama
-- Open-Meteo API entegrasyonu
-- Python tabanlı ETL pipeline
-- API hatalarında otomatik retry mekanizması
-- SQLite üzerinde historical data saklama
-- SQL sorguları ile veri analizi
-- Pandas ile veri işleme
-- Eksik ve hatalı veri kontrolleri
-- Duplicate kayıt kontrolü
-- En sıcak ve en soğuk şehir analizi
-- Türkiye sıcaklık ortalaması
-- En sıcak / en soğuk 10 şehir
-- 81 ilin harita üzerinde görüntülenmesi
-- Şehir bazlı sıcaklık geçmişi
-- Time-series grafikler
-- Streamlit tabanlı interaktif dashboard
-- Saatlik otomatik veri toplama
+- 🇹🇷 Türkiye'nin 81 ilinden hava durumu verisi toplama
+- 🌐 Open-Meteo API entegrasyonu
+- ⚙️ Python tabanlı ETL pipeline
+- 🔁 API hatalarında otomatik Retry sistemi
+- 🗄️ SQLite veritabanında veri saklama
+- 🔎 SQL sorguları ile veri analizi
+- 🐼 Pandas ile veri işleme
+- ✅ Data Quality kontrolleri
+- 📈 Historical / Time-Series veri analizi
+- 🔥 En sıcak ve en soğuk şehir analizi
+- 📊 En sıcak ve en soğuk 10 şehir
+- 🗺️ Türkiye sıcaklık haritası
+- 🔎 Şehir bazlı sıcaklık geçmişi
+- 🖥️ Streamlit interaktif dashboard
+- ⏰ Windows Task Scheduler ile saatlik otomatik veri toplama
 
-## 🛠️ Kullanılan Teknolojiler
+## 🛠️ Teknolojiler
 
 | Teknoloji | Kullanım |
 |---|---|
-| Python | Ana programlama dili |
-| Requests | API üzerinden veri toplama |
-| Open-Meteo API | Hava durumu veri kaynağı |
+| Python | ETL ve ana uygulama |
+| Requests | API istekleri |
+| Open-Meteo API | Hava durumu verileri |
 | SQLite | Veritabanı |
 | SQL | Veri sorgulama |
-| Pandas | Veri analizi ve işleme |
-| Matplotlib | Veri görselleştirme |
+| Pandas | Veri analizi |
+| Matplotlib | Görselleştirme |
 | Streamlit | Dashboard |
-| Windows Task Scheduler | Pipeline otomasyonu |
+| Git & GitHub | Versiyon kontrolü |
+| Windows Task Scheduler | Saatlik otomasyon |
 
 ## 🔄 ETL Pipeline
 
 ### Extract
-
-Open-Meteo API üzerinden 81 ilin güncel sıcaklık verileri alınır.
+Open-Meteo API üzerinden Türkiye'nin 81 ilinin sıcaklık verileri alınır.
 
 ### Transform
-
-API'den gelen veriler işlenir ve şehir, koordinat, zaman ve sıcaklık bilgileri standart bir yapıya dönüştürülür.
+API'den gelen veriler şehir, koordinat, zaman ve sıcaklık formatında işlenir.
 
 ### Load
-
 İşlenen veriler SQLite veritabanındaki `weather` tablosuna kaydedilir.
 
-Her çalıştırmada yeni ölçümler eklenerek geçmiş hava durumu verileri korunur.
+Eski kayıtlar korunarak zaman içerisinde historical dataset oluşturulur.
 
 ## 🔁 Retry Mekanizması
 
-API isteğinin geçici olarak başarısız olması durumunda pipeline isteği otomatik olarak tekrar dener.
+Bir API isteği geçici olarak başarısız olursa sistem otomatik olarak tekrar dener.
 
-Bu sayede tek bir şehirde oluşan geçici bağlantı problemi tüm pipeline'ın başarısız olmasına neden olmaz.
-
-## 🗄️ Veritabanı
-
-Ana veritabanı:
-
-```text
-weather.db
-```
-
-Ana tablo:
-
-```text
-weather
-```
-
-Örnek SQL sorgusu:
-
-```sql
-SELECT city, temperature
-FROM weather
-ORDER BY temperature DESC
-LIMIT 10;
-```
+Bu sayede tek bir şehirde oluşan bağlantı problemi tüm pipeline'ın durmasına neden olmaz.
 
 ## ✅ Data Quality
 
-Pipeline içerisindeki veriler için çeşitli kalite kontrolleri uygulanır:
+Pipeline üzerinde:
 
-- Eksik değer kontrolü
+- Eksik veri kontrolü
 - Anormal sıcaklık kontrolü
-- 81 ilin mevcut olup olmadığının kontrolü
+- 81 il kontrolü
 - Duplicate kayıt kontrolü
 
-Kontroller başarılı olduğunda:
+uygulanmaktadır.
+
+Başarılı kontrolde:
 
 ```text
 DATA QUALITY CHECK PASSED
@@ -124,34 +99,41 @@ sonucu alınır.
 
 ## 📊 Dashboard
 
-Streamlit dashboard üzerinden:
+Dashboard üzerinden:
 
-- Güncel sıcaklıklar
-- En sıcak şehir
-- En soğuk şehir
+- Güncel 81 il sıcaklığı
+- En sıcak il
+- En soğuk il
 - Türkiye sıcaklık ortalaması
-- En sıcak 10 şehir
-- En soğuk 10 şehir
+- En sıcak 10 il
+- En soğuk 10 il
 - Türkiye haritası
 - Şehir bazlı sıcaklık geçmişi
-- Historical data
-- Time-series grafikler
+- Time-Series grafikleri
 
 incelenebilir.
 
-Dashboard'u çalıştırmak için:
+## ▶️ Kurulum
+
+Gerekli Python paketlerini yükleyin:
 
 ```bash
-streamlit run dashboard.py
+pip install -r requirements.txt
 ```
 
-## ▶️ ETL Pipeline'ı Çalıştırma
+ETL pipeline'ı çalıştırın:
 
 ```bash
 python main.py
 ```
 
-## 🔍 Data Quality Kontrolü
+Dashboard'u başlatın:
+
+```bash
+streamlit run dashboard.py
+```
+
+Data Quality kontrolünü çalıştırın:
 
 ```bash
 python data_quality.py
@@ -169,14 +151,15 @@ DataPulseV2/
 ├── database.py
 ├── data_quality.py
 ├── cities.csv
-├── weather.db
+├── requirements.txt
+├── dashboard.png
 └── README.md
 ```
 
 ## 🎯 Projenin Amacı
 
-DataPulse Türkiye ile uçtan uca bir veri pipeline'ının temel bileşenleri uygulamalı olarak oluşturulmuştur:
+Bu projede uçtan uca bir veri mühendisliği sürecinin temel bileşenleri uygulanmıştır:
 
-**Data Collection → ETL → Database → SQL → Data Quality → Analysis → Visualization → Automation**
+**Data Collection → ETL → Retry → SQL → Data Quality → Historical Data → Analysis → Visualization → Automation**
 
-Proje, ilerleyen aşamalarda PostgreSQL, Docker, cloud deployment ve daha gelişmiş veri orkestrasyon araçlarıyla genişletilebilir.
+Proje ilerleyen aşamalarda PostgreSQL, Docker, Cloud ve veri orkestrasyon araçlarıyla geliştirilebilir.
